@@ -12,15 +12,32 @@ module DeltaCloud
       nil
     end
 
+    def flavors(credentials, ops)
+      []
+    end
+
     def flavors_by_architecture(credentials, architecture)
       flavors(credentials, :architecture => architecture)
     end
 
+    def realm(credentials, opts)
+      realms = realms(credentials, opts)
+      return realms.first unless realms.empty?
+      nil
+    end
+
+    def realms(credentials, ops)
+      []
+    end
 
     def image(credentials, opts)
       images = images(credentials, opts)
       return images.first unless images.empty?
       nil
+    end
+
+    def images(credentials, ops)
+      []
     end
 
     def instance(credentials, opts)
@@ -29,6 +46,12 @@ module DeltaCloud
       nil
     end
 
+    def instances(credentials, ops)
+      []
+    end
+
+    def create_instance(credentials, image_id, opts)
+    end
     def start_instance(credentials, id)
     end
     def stop_instance(credentials, id)
@@ -42,10 +65,18 @@ module DeltaCloud
       nil
     end
 
+    def volumes(credentials, ops)
+      []
+    end
+
     def snapshot(credentials, opts)
       snapshots = snapshots(credentials, opts)
       return snapshots.first unless snapshots.empty?
       nil
+    end
+
+    def snapshots(credentials, ops)
+      []
     end
 
     def filter_on(collection, attribute, opts)
