@@ -52,7 +52,6 @@ class InstancesController < ApplicationController
       }
       format.xml {
         instance = driver.create_instance( credentials, @image.id, params )
-        puts "RESULT #{instance.inspect}"
         render :xml=>convert_to_xml( :instance, instance), :status=>:created, :location=>instance_url( instance.id )
       }
     end

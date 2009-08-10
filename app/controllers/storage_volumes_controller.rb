@@ -6,8 +6,7 @@ class StorageVolumesController < ApplicationController
   around_filter :catch_auth
 
   def index
-    @volumes = driver.volumes( credentials )
-    puts @volumes.inspect
+    @volumes = driver.storage_volumes( credentials, :id=>params[:id] )
     respond_to do |format|
       format.html
       format.json
@@ -18,7 +17,7 @@ class StorageVolumesController < ApplicationController
   end
 
   def show
-    @volume = driver.volume( credentials, :id => params[:id] )
+    @volume = driver.storage_volume( credentials, :id => params[:id] )
     respond_to do |format|
       format.html
       format.json

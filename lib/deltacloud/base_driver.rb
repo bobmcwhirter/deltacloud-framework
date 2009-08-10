@@ -59,23 +59,23 @@ module DeltaCloud
     def reboot_instance(credentials, id)
     end
 
-    def volume(credentials, opts)
-      volumes = volumes(credentials, opts)
+    def storage_volume(credentials, opts)
+      volumes = storage_volumes(credentials, opts)
       return volumes.first unless volumes.empty?
       nil
     end
 
-    def volumes(credentials, ops)
+    def storage_volumes(credentials, ops)
       []
     end
 
-    def snapshot(credentials, opts)
-      snapshots = snapshots(credentials, opts)
+    def storage_snapshot(credentials, opts)
+      snapshots = storage_snapshots(credentials, opts)
       return snapshots.first unless snapshots.empty?
       nil
     end
 
-    def snapshots(credentials, ops)
+    def storage_snapshots(credentials, ops)
       []
     end
 

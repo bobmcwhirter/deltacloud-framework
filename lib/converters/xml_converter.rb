@@ -27,13 +27,12 @@ module Converters
     def convert(obj, builder=nil)
       builder ||= Builder::XmlMarkup.new( :indent=>2 )
       if ( obj.is_a?( Array ) )
-        builder.__send__( @type.to_s.pluralize.to_sym ) do
+        builder.__send__( @type.to_s.pluralize.gsub( /_/, '-' ).to_sym ) do
           obj.each do |e|
             convert( e, builder )
           end
         end
       else
-        puts "dump #{obj.inspect} #{obj.is_a?( Flavor )}"
         case ( obj )
           when Flavor
             builder.flavor( :href=>@link_builder.send( :flavor_url,  obj.id ) ) {
@@ -73,7 +72,31 @@ module Converters
                   builder.address( address )
                 end 
               }
-          }
+            }
+          when StorageVolume
+            builder.__send__('storage-volume', :href=>@link_builder.send( :storage_volume_url, obj.id )) {
+              builder.id( obj.id )
+              builder.created( obj.created )
+              builder.state( obj.state )
+              builder.capacity( obj.capacity )
+              builder.device( obj.device )
+              if ( obj.instance_id )
+                builder.instance( :href=>@link_builder.send( :instance_url, obj.instance_id ) )
+              else
+                builder.instance()
+              end
+            }
+          when StorageSnapshot
+            builder.__send__('storage-snapshot', :href=>@link_builder.send( :storage_snapshot_url, obj.id )) {
+              builder.id( obj.id )
+              builder.created( obj.created )
+              builder.state( obj.state )
+              if ( obj.storage_volume_id )
+                builder.__send__('storage-volume', :href=>@link_builder.send( :storage_volume_url, obj.storage_volume_id ) )
+              else
+                builder.__send( 'storage-volume' )
+              end
+            }
         end
       end
       return builder.target!
