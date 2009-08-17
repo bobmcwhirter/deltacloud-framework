@@ -51,8 +51,8 @@ Rails::Initializer.run do |config|
 end
 
 
-DRIVER=:ec2
-#DRIVER=:mock
+#DRIVER=:ec2
+DRIVER=:mock
 #DRIVER=:rhevm
 
 DRIVER_ROOT = File.dirname( __FILE__ ) + "/../../deltacloud-driver-#{DRIVER}"
