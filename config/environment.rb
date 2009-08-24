@@ -52,8 +52,8 @@ end
 
 
 #DRIVER=:ec2
-DRIVER=:mock
-#DRIVER=:rhevm
+#DRIVER=:mock
+DRIVER=:rhevm
 
 DRIVER_ROOT = File.dirname( __FILE__ ) + "/../../deltacloud-driver-#{DRIVER}"
 $: << DRIVER_ROOT+'/lib'
