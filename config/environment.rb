@@ -50,10 +50,25 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
+#DEFAULT_DRIVER=:ec2
+DEFAULT_DRIVER=:mock
+#DEFAULT_DRIVER=:rhevm
 
-#DRIVER=:ec2
-#DRIVER=:mock
-DRIVER=:rhevm
+
+unless defined?( DRIVER )
+  driver_env = ENV['DRIVER']
+  ( driver_env = driver_env.to_sym ) if ( driver_env )
+  DRIVER=driver_env if driver_env
+end
+
+unless defined?( DRIVER )
+  if ( defined?( DEFAULT_DRIVER ) )
+    DRIVER=DEFAULT_DRIVER
+  else
+    raise Exception.new( "DRIVER must be defined through environment variable or DEFAULT_DRIVER through config/environment.rb" )
+  end
+end
+
 
 DRIVER_ROOT = File.dirname( __FILE__ ) + "/../../deltacloud-driver-#{DRIVER}"
 $: << DRIVER_ROOT+'/lib'
